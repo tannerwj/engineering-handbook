@@ -78,7 +78,7 @@ you can at runtime (e.g. base URL from the serving host) and generate what
 must exist (keys) on first use, with an explicit override. List required
 secrets in `.dev.vars.example`. The deploy script applies migrations.
 
-**First run.** See "First-run bootstrap" under Security.
+**First run.** See the bootstrap rules in [Security](security.md).
 
 **A way back.** Deploy-button installs are copies, not GitHub forks. Ship:
 - in-app feedback links (issue forms, pre-filled with the version);

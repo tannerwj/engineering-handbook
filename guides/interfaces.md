@@ -1,6 +1,8 @@
 # Design a shipped interface
 
-Select the section for the interface you are changing. MCP guidance applies to products exposing an MCP server.
+Identify who consumes the interface and which observations they rely on. Preserve inputs, outputs and failure behavior for existing callers unless the project has approved a change.
+
+For a CLI, exercise the installed command with an explicit working directory. Verify stdout, stderr, exit status and files changed for a success and an invalid input. For a library, exercise the exported API from a small consumer using the packaged artifact. Browser, API and MCP projects can use the sections below.
 
 ## Frontend
 
@@ -23,7 +25,7 @@ JS validation; the native layer blocks custom messages. Pick one.
 tool that runs model-written JS in an isolated sandbox with a typed proxy for
 the real tools. Compare token use on representative calls.
 
-**Sandbox isolation** (for code execution):
+**Cloudflare code-mode sandbox example** (for code execution):
 - Validate auth *before* spinning up the isolate (fail closed; bad tokens
   can't burn compute).
 - `globalOutbound: null`: zero network from generated code.
