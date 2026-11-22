@@ -2,6 +2,8 @@
 
 Use the relevant section when changing a Worker, D1 query, binding, migration, or release. Check platform behavior against the docs and the project’s configured compatibility date.
 
+For account selection, local development, release commands and resource operations, start with the [project-scoped cf CLI guide](../profiles/cf-cli.md).
+
 ## Platform (Cloudflare Workers)
 
 **Response handling.** Never `res.clone()` after the body has been transferred.

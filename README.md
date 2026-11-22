@@ -17,6 +17,7 @@ Start with the task you are doing. Add a profile when the project uses that lang
 | --- | --- |
 | TypeScript source gates, compilation, or package verification | [TypeScript and Abacus](profiles/typescript.md) |
 | Browser journeys, staging, cookies, or response headers | [Hosted web services](profiles/web-services.md) |
+| Develop, deploy or manage resources from a Cloudflare checkout | [Project-scoped cf CLI](profiles/cf-cli.md) |
 | Workers, D1, bindings, tracing, or Cloudflare deployments | [Cloudflare operations](guides/cloudflare.md) |
 
 For example, a Python CLI that changes its output format can use the interface and verification guides with its existing test runner. A TypeScript Worker changing a D1 query can combine the operations guide with the TypeScript and Cloudflare profiles.
