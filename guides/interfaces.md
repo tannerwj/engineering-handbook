@@ -32,7 +32,7 @@ the real tools. Compare token use on representative calls.
 - Token lives in `ctx.props`, invisible across the RPC boundary; sandbox gets
   a `callTool` RPC, never the credential.
 - No recursion (`execute` can't call `execute`).
-- Resource caps: 20s CPU / 25s wall / 200KB code / 500 subrequests.
+- Choose CPU, wall time, input/output size, inner-call and concurrency limits from representative tasks. Test the limit and the first request over it.
 - Every side effect runs through the existing permission-checked handlers.
 
 **Public integrations serving both interactive and scripted clients.** Support API keys *and* OAuth (RFC 9728 protected
@@ -48,8 +48,14 @@ Documents (claude.ai, Claude Code, VS Code) and dynamic client registration
 **Only advertise what works.** Hide tools whose dependencies (bindings,
 config) are missing instead of listing them and failing on call.
 
-**Metrics from day one.** Track every tool call: timestamp, tool name,
-duration, outcome and, when per-credential reporting is needed, a non-secret credential record ID. Expose a `metrics_summary` tool (per-tool
-calls, p50/p95 latency, top errors, execute composition) *and* a human
-dashboard. The "most-chained tools" and "zero-result searches" signals tell
-you where the catalog needs work.
+### Measure MCP cost and performance
+
+Start with the question you need to answer. For example, can a client discover a tool and finish a two-read task within budget? Track a transport request, a top-level tool invocation, an inner operation and a quota charge as separate units. One execute call with two reads can produce one completion, two inner dispatches and three charges if both layers are metered. Publish the counting rule beside the metric.
+
+- Emit a structured completion event at the tool handler boundary. Use the service name supplied by the runtime, a stable event name, tool or mode, elapsed milliseconds, a bounded outcome code, inner dispatch count and result bytes. Specify which validation failures reach the handler, what a caught inner failure means and whether bytes describe the payload or the protocol envelope.
+- Use the existing telemetry sink. Keep generated code, prompts, error text, credentials, arguments and financial or other user data out of completion events. Set a retention and sampling budget across services. When sampling successes, record the sampling rate and account for it before comparing services. Keep exact quota enforcement and required audit records independent of sampled diagnostics.
+- Aggregate by service and mode. Show invocation count, failure categories, median and p95 tool duration, operations per execute and payload size. Report the window, sample size and sampling method. A streaming HTTP connection can stay open long after a tool returns. Use provider CPU, database reads/writes, isolated executions and billing data to estimate cost.
+- Profile common cheap requests as well as heavy calls. Listing two static tools can otherwise build hundreds of operation schemas. Initialize dependencies on first use, reuse them within that request and keep authorization in the operation handler. Share catalog metadata across requests only when every input that changes visibility or content is accounted for.
+- Run the same discovery, composed read and controlled failure before and after an optimization. Verify results, access boundaries, quota charges and completion fields. Count the work removed (registry builds, serializations, database operations or provider calls). Report local evidence separately from production latency and savings.
+
+A saved log query can answer these questions across a fleet. Add an in-product dashboard or a metrics tool when an identified consumer needs it and its access scope is defined.
