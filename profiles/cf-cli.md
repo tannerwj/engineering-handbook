@@ -30,6 +30,7 @@ Credential and account selection are independent. A `CLOUDFLARE_API_TOKEN` (incl
 | Deploy | Run the documented release command. Preserve its migrations, backup, build, verification receipt and smoke steps. If the project ships directly with cf, deploy the selected mode and verify the serving version and affected behavior. |
 | Operate a resource | Search by action and resource type, inspect arguments and request shape, then select the resource ID for the project and mode. Preview mutations where supported and read back the resulting state. |
 | Diagnose or recover | Start with the deployed version and a request or job ID. Use the project's log or trace read path and its rollback procedure. Code rollback and data recovery are separate operations. [Cloudflare operations](../guides/cloudflare.md) |
+| Investigate CPU or allocations | Capture a short profile of the serving Worker version or a specific active Durable Object while the workload runs. [Profile a deployed Worker](../guides/cloudflare.md#profile-a-deployed-worker) |
 
 Example of discovering a D1 operation without resource names or credentials:
 

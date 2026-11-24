@@ -9,6 +9,7 @@ Start with the task you are doing. Add a profile when the project uses that lang
 | Import provider data, reconcile missing records, or replay writes | [Provider sync](guides/provider-sync.md) |
 | Change sessions, credentials, permissions, or public request handling | [Security](guides/security.md) |
 | Release software, migrate state, diagnose failures, or measure cost | [Operations](guides/operations.md) |
+| Investigate slow operations, unnecessary reads, or allocation growth | [Improve performance from a profile](guides/profiling.md) |
 | Measure MCP usage or reduce tool execution cost | [MCP cost and performance](guides/interfaces.md#measure-mcp-cost-and-performance) |
 | Change a CLI, library, web, API, or MCP interface | [Interfaces](guides/interfaces.md) |
 

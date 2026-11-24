@@ -73,6 +73,26 @@ Docs: [configuration](https://developers.cloudflare.com/workers/wrangler/configu
 [telemetry query API](https://developers.cloudflare.com/api/resources/workers/subresources/observability/subresources/telemetry/methods/query/),
 [Local Explorer](https://developers.cloudflare.com/workers/local-development/local-explorer/).
 
+### Profile a deployed Worker
+
+For workload design, before-and-after comparisons and deciding which optimization to keep, see [Improve performance from a profile](profiling.md).
+
+Use on-demand profiling when a real workload shows elevated Worker CPU time or memory pressure. If requests are slow while CPU time stays low, follow the request trace through D1, fetches and other waits first. Profiling is a diagnostic you run while investigating a workload.
+
+1. Confirm the project account, Worker and version serving the affected traffic. The account needs Workers profiling enabled. Use the serving version ID during a rollout because `latest` selects the most recently created version. Upload source maps with the release so frames resolve to application code.
+2. Capture while the operation is active. From the checkout, use the project's pinned cf invocation. For example, with pnpm and the Worker name and serving version set in the shell, this records five seconds of CPU samples:
+
+   ```sh
+   WORKER_ID=$(pnpm exec cf workers get "$WORKER_NAME" | jq -er '.id')
+   pnpm exec cf workers versions profile "$VERSION_ID" \
+     --worker-id "$WORKER_ID" --duration-ms 5000 \
+     --profile-type cpu > worker-cpu.pprof
+   ```
+
+   Use the immutable Worker ID here. On PFA, the name returned error `10393` even while invocation logs confirmed traffic on the selected version. The ID yielded readable profiles. For allocations, use `--profile-type heap` and a separate output file. To target an active Durable Object instance running that version, supply both `--namespace-id` and `--actor-id`. The dashboard also supports captures under **Workers & Pages → Worker → Observability → Flamegraph**.
+3. Read the widest stacks in the flame graph. CPU width reflects sampled CPU work. Heap width reflects sampled allocations during the window. A heap capture alone cannot establish that memory stays retained. A Worker capture samples one recently active isolate, so repeat under comparable traffic if the operation did not appear.
+4. After a fix, repeat the same operation and capture duration. Record the versions, workload and change in CPU time per invocation or allocation volume. Check request-level metrics across the deployment before generalizing from one isolate. [Cloudflare’s guide to on-demand profiling](https://blog.cloudflare.com/workers-on-demand-profiling/)
+
 ## Apps other people deploy
 
 **One click.** Ship a template config that deploys with no edits: derive what

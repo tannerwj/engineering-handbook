@@ -12,6 +12,8 @@ on non-obvious intent or gotchas; never restate the code.
 
 **Choose the failure boundary.** Exercise the smallest real boundary that can distinguish the intended result from the plausible wrong one. Drive browser behavior through the browser. Exercise persistence against the database with independently chosen records. Use hand-calculated examples for money and pure transforms. Keep a known failing example when fixing a regression.
 
+**Give each user-visible failure one primary test.** Add a second path when it can catch a distinct failure, and name that failure in the test. For example, a return test can verify that importing three units and returning one preserves the other two. A refund test can verify that the credited amount reaches the right account. Exercise the shared credit-linking interaction once. When consolidating a suite, compare repeated work and gate time across several comparable runs, and keep failures specific enough to diagnose.
+
 **Every new route gets a test.** Ship the test in the same commit as the
 route. Untested routes reach production broken.
 
