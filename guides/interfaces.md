@@ -4,6 +4,8 @@ Identify who consumes the interface and which observations they rely on. Preserv
 
 For a CLI, exercise the installed command with an explicit working directory. Verify stdout, stderr, exit status and files changed for a success and an invalid input. For a library, exercise the exported API from a small consumer using the packaged artifact. Browser, API and MCP projects can use the sections below.
 
+For an in-app form, CLI command or MCP tool that sends a note to the product maintainer, use [Product feedback](product-feedback.md).
+
 ## Frontend
 
 **Rendering.** Choose rendering to match the interaction. A shareable content page can use server-rendered HTML. A stateful application may benefit from a client framework. Verify deep links, navigation, accessibility and asset updates through the shipped interface.

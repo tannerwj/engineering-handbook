@@ -11,6 +11,7 @@ Start with the task you are doing. Add a profile when the project uses that lang
 | Release software, migrate state, diagnose failures, or measure cost | [Operations](guides/operations.md) |
 | Investigate slow operations, unnecessary reads, or allocation growth | [Improve performance from a profile](guides/profiling.md) |
 | Measure MCP usage or reduce tool execution cost | [MCP cost and performance](guides/interfaces.md#measure-mcp-cost-and-performance) |
+| Collect feedback from app users or MCP callers | [Product feedback](guides/product-feedback.md) |
 | Change a CLI, library, web, API, or MCP interface | [Interfaces](guides/interfaces.md) |
 
 ## Implementation profiles
