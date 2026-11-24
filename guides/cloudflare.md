@@ -100,7 +100,7 @@ Choose a user action and a success condition. For example, reduce time to displa
 | Measurement | Collection | What it tells you |
 | --- | --- | --- |
 | User elapsed time | Time from the click or request start to the named finish, such as body consumed or page usable | What the user waited for, including transport and client work |
-| Worker CPU | Match the response’s Ray ID to the invocation log and read its CPU milliseconds and serving version | Compute charged to this invocation. An on-demand CPU profile identifies functions sampled on one active isolate |
+| Worker CPU | Match the response’s Ray ID to the invocation log and read its CPU milliseconds and serving version | Compute attributed to this invocation. An on-demand CPU profile identifies functions sampled on one active isolate |
 | Handler and dependency waits | Time authentication, the handler and important binding calls with spans or Server-Timing | Which dependency blocks the response. A parent span already contains its children. Parallel calls overlap |
 | D1 execution and volume | Read statement metadata for SQL duration, rows read and written, attempts and serving location when available. Count returned rows separately | Database execution excludes network time. A small result can still require a large scan |
 
