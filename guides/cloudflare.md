@@ -93,6 +93,25 @@ Use on-demand profiling when a real workload shows elevated Worker CPU time or m
 3. Read the widest stacks in the flame graph. CPU width reflects sampled CPU work. Heap width reflects sampled allocations during the window. A heap capture alone cannot establish that memory stays retained. A Worker capture samples one recently active isolate, so repeat under comparable traffic if the operation did not appear.
 4. After a fix, repeat the same operation and capture duration. Record the versions, workload and change in CPU time per invocation or allocation volume. Check request-level metrics across the deployment before generalizing from one isolate. [Cloudflare’s guide to on-demand profiling](https://blog.cloudflare.com/workers-on-demand-profiling/)
 
+### Attribute a slow request before changing code
+
+Choose a user action and a success condition. For example, reduce time to display a financial summary while preserving the figures and keeping Worker CPU per request flat. Capture the following on the same requests.
+
+| Measurement | Collection | What it tells you |
+| --- | --- | --- |
+| User elapsed time | Time from the click or request start to the named finish, such as body consumed or page usable | What the user waited for, including transport and client work |
+| Worker CPU | Match the response’s Ray ID to the invocation log and read its CPU milliseconds and serving version | Compute charged to this invocation. An on-demand CPU profile identifies functions sampled on one active isolate |
+| Handler and dependency waits | Time authentication, the handler and important binding calls with spans or Server-Timing | Which dependency blocks the response. A parent span already contains its children. Parallel calls overlap |
+| D1 execution and volume | Read statement metadata for SQL duration, rows read and written, attempts and serving location when available. Count returned rows separately | Database execution excludes network time. A small result can still require a large scan |
+
+Record the ingress colo, the response’s `cf-placement`, and the D1 location separately. Use a harmless representative request, the same data, caller type, cache state and client. Warm each version and alternate them when possible. Group by serving version **and** execution location. Include an unchanged route using the same authentication and database. When placement differs, report the user latency by location and leave the code effect unresolved. [Worker placement](https://developers.cloudflare.com/workers/configuration/placement/) · [D1 result metadata](https://developers.cloudflare.com/d1/worker-api/return-object/)
+
+Build the elapsed-time breakdown per request before summarizing it. Subtract only disjoint measured intervals. Report overlaps and unexplained time explicitly. Subtracting Worker CPU or summed SQL durations from client elapsed time cannot identify network latency. Invocation wall time can include background work after the response. Keep counts, medians and meaningful tails alongside the matched sample size. [Worker metrics](https://developers.cloudflare.com/workers/observability/metrics-and-analytics/)
+
+To decide whether to keep a query rewrite, alternate the two read-only queries on the same fixture and compare complete application outputs. Check SQL duration, rows scanned, rows returned, and downstream Worker CPU. If the query moves a join or grouping step into JavaScript, replay each version’s result sets through its own decoder and handler under the same runtime. Report a local CPU replay separately from deployed CPU. For a change to concurrency, repeat with a fixed binding delay on both versions to expose serial round trips. The unchanged route shows how much noise remains.
+
+A release decision should name the saved resource and any added cost. Multiply the per-request difference by observed route volume when estimating quota impact. Use the account’s actual allowances and rates for a money estimate. A reduction in reads may be worth keeping with flat CPU and latency. A measurable CPU increase calls for an explicit tradeoff. If a live profile cannot attach, retain invocation CPU measurements and leave function attribution open. [Production profiling](https://developers.cloudflare.com/workers/observability/profiling-in-production/)
+
 ## Apps other people deploy
 
 **One click.** Ship a template config that deploys with no edits: derive what

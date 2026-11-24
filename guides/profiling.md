@@ -19,4 +19,4 @@ Start with one operation someone actually performs, such as opening a page, sync
 
 A useful handoff fits in a paragraph. Name the operation, fixture and environment. Give the before and after in the same units, the behavior checked, and the case that saw little benefit. Record how to replay the comparison. Keep a regression test for a concrete failure or a stable work bound when it would catch a recurrence. A machine-specific timing from one investigation belongs in the measurement report.
 
-For runtime-specific collection, see [Worker profiling](cloudflare.md#profile-a-deployed-worker) and [MCP cost and performance](interfaces.md#measure-mcp-cost-and-performance).
+For runtime-specific collection, see [Worker profiling](cloudflare.md#profile-a-deployed-worker), [Cloudflare request attribution](cloudflare.md#attribute-a-slow-request-before-changing-code) and [MCP cost and performance](interfaces.md#measure-mcp-cost-and-performance).
