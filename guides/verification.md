@@ -29,6 +29,12 @@ Seed deterministic stubs from fixture identity, not run/job IDs, so
 comparisons don't produce false regressions. Reuse a server or build only after
 verifying it's the one you intend to test.
 
+## Model checking with EveryState
+
+EveryState is an option when correctness depends on the order of events. Write down one promise the user relies on. Model the smallest set of actions that can challenge it in TLA+, splitting steps wherever another operation can intervene. Treat a step as atomic only when the implementation enforces that boundary. Use a small finite set of actors and inputs, and include delays, retries or lost replies when relevant. [EveryState and its formal verification skill](https://github.com/mattzcarey/everystate/tree/main/skills/formal-verification)
+
+Run the checker against the invariant, then map each step of a counterexample back to the source. For a fix, keep a configuration that exposes the original failure and another that checks the corrected behavior. Record the checker version, command, bounds and assumptions beside the model. Exercise the failing event order through the real interface as well. A passing exhaustive run covers the reachable states of that model within those bounds.
+
 ## Keep verification repeatable
 
 Parallelize independent checks after isolating their files, data and other mutable inputs. Reuse a result only when its relevant source, configuration, dependencies, toolchain and environment still match. A Markdown file embedded in a binary is a build input. After shipping, run a short check through the installed or deployed artifact. Hosted applications can use the [web service checks](../profiles/web-services.md).

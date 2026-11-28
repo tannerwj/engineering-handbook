@@ -6,6 +6,7 @@ Start with the task you are doing. Add a profile when the project uses that lang
 | --- | --- |
 | Interpret a requirement, preserve behavior, or propose a new standard | [Intent and decisions](guides/intent.md) |
 | Choose a regression test, evaluate a gate, or change a budget | [Verification](guides/verification.md) |
+| Check whether overlapping operations can violate a guarantee | [Model checking with EveryState](guides/verification.md#model-checking-with-everystate) |
 | Import provider data, reconcile missing records, or replay writes | [Provider sync](guides/provider-sync.md) |
 | Change sessions, credentials, permissions, or public request handling | [Security](guides/security.md) |
 | Release software, migrate state, diagnose failures, or measure cost | [Operations](guides/operations.md) |
