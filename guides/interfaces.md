@@ -21,7 +21,7 @@ JS validation; the native layer blocks custom messages. Pick one.
 
 A server can commit a write and lose the response on its way back. Tell the caller which outcomes are confirmed and when delivery is still unknown. For a retryable write, give each logical submission a key. Reuse it when retrying the same submission. On the server, scope the key to the caller, enforce uniqueness atomically and return the original receipt on replay. Reject a reused key with different input. A user intentionally making a new submission gets a fresh key, even if the text matches an earlier one.
 
-Exercise this through the normal entry point. For example, have the service save a feedback report and drop the reply. Retry, verify the original receipt and count one stored report. Edit the draft and submit it as a new report, then verify a second receipt. These outcomes can stay in the test when the UI or transport changes.
+Verify through the normal entry point that retrying after a lost response recovers the original result and applies the write once.
 
 ## API design
 
