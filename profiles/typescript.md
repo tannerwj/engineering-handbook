@@ -12,4 +12,4 @@ Run the applicable checks through the normal commit, CI or release path. Compare
 
 For parsers or pure calculations with a broad input space, use Hegel or the existing property-test library and retain minimized failing cases. For browser journeys using tester-army/e2e, run the shipped interface and wait for observable state. For a published package, exercise its real exports from a clean consumer install. A passing typecheck alone cannot detect missing files in the published package.
 
-For Worker response headers, use a common Hono middleware or a wrapper on the exported fetch handler. Document required local secrets by name in `.dev.vars.example`. Worker observability, D1, and the Effect and Alchemy trials are in [Cloudflare operations](../guides/cloudflare.md).
+For Worker response headers, use a common Hono middleware or a wrapper on the exported fetch handler. Document required local secrets by name in `.dev.vars.example`. For typed failures and stateful frontend workflows, see [Effect and Effect UI](effect.md). Worker observability, D1, and infrastructure trials are in [Cloudflare operations](../guides/cloudflare.md).

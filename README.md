@@ -19,6 +19,7 @@ Start with the task you are doing. Add a profile when the project uses that lang
 | When the change involves | Use |
 | --- | --- |
 | TypeScript source gates, compilation, or package verification | [TypeScript and Abacus](profiles/typescript.md) |
+| Typed failures, retry policies, or a stateful TypeScript UI | [Effect and Effect UI](profiles/effect.md) |
 | Browser journeys, staging, cookies, or response headers | [Hosted web services](profiles/web-services.md) |
 | Develop, deploy or manage resources from a Cloudflare checkout | [Project-scoped cf CLI](profiles/cf-cli.md) |
 | Workers, D1, bindings, tracing, or Cloudflare deployments | [Cloudflare operations](guides/cloudflare.md) |
